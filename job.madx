@@ -67,8 +67,14 @@ select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
          MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,envx,envy,offx,offy;
 ! twiss, looking for a closed solution - even if the machine is not closed
 twiss,rmatrix,chrom, file="fcc_ee_t_74_11_nosol_b1_twiss.tfs"; 
-show, betaStartTrack; value, betaStartTrack->betx, betaStartTrack->bety;
-!stop;
+system, "rm -f beta0.txt beam0.txt";
+assign, echo="beta0.txt";
+show, betaStartTrack;
+assign, echo="beam0.txt";
+show, beam;
+assign, echo=terminal;
+system, "root -q -l -x GenerateInrays.C";
+stop;
 
 ! Picking the last section
 !startbetax=table(twiss,f0.154,betx);
