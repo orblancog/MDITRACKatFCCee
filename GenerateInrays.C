@@ -16,7 +16,7 @@ using namespace std;
 
 int GenerateInrays () {
   //  gROOT->Reset();
-  int N =5 ;//number of particles to generate
+  int N =1000;//number of particles to generate
   int debug=1; // if debug 1, print goes to stdout
   int madxtrac=1;//track in MAD-X and PTC_MAD-X
 

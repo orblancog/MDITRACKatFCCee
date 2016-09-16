@@ -8,7 +8,8 @@
 option,-echo,-info,-warn;
 
 ! Beam params
-!http://tlep.web.cern.ch/content/machine-parameters
+! http://tlep.web.cern.ch/content/machine-parameters
+! https://indico.cern.ch/event/438866/contributions/1085022/attachments/1256984/1856023/1Boscolo.pdf
 ! FCC ee 175~GeV
 Ebeam := 175;![GeV]
 emitx   = 1.3e-9;![m]
@@ -63,18 +64,19 @@ use,sequence=L000004;
 savebeta,label=betaStartTrack,place=IP.1;
 savebeta,label=betaStartTrack2,place=f0.154;
 select, flag=twiss, clear;
-select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
-         MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,envx,envy,offx,offy;
+select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
+	 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
+	 envx,envy,offx,offy;
 ! twiss, looking for a closed solution - even if the machine is not closed
-twiss,rmatrix,chrom, file="fcc_ee_t_74_11_nosol_b1_twiss.tfs"; 
+twiss,rmatrix,chrom, file="fcc_ee_t_74_11_nosol_b1_twiss.tfs";
 system, "rm -f beta0.txt beam0.txt";
 assign, echo="beta0.txt";
-show, betaStartTrack;
+show, betaStartTrack2;
 assign, echo="beam0.txt";
 show, beam;
 assign, echo=terminal;
 system, "root -q -l -x GenerateInrays.C";
-stop;
+!stop;
 
 ! Picking the last section
 !startbetax=table(twiss,f0.154,betx);
@@ -84,10 +86,28 @@ stop;
 !startmux=table(twiss,f0.154,mux);
 !startmuy=table(twiss,f0.154,muy);
 !value, startbetax,startbetay,startalfax,startalfay;
+myffsl=table(twiss,IP.4,s)-table(twiss,F0.154,s);
+value, table(twiss,IP.4,s),table(twiss,F0.154,s),myffsl;
+aftermyffsl=table(twiss,BG1.2,s)-table(twiss,IP.1,s);
+value, table(twiss,BG1.1,s),table(twiss,IP.1,s),aftermyffsl;
+!stop;
 seqedit,sequence=L000004;
-extract,sequence=L000004, from=f0.154, to=IP.4,newname=myffs;
+extract,sequence=L000004, from=F0.154, to=IP.4,newname=myffs;
+!cycle, start=IP.4;
+extract,sequence=L000004, from=IP.1, to=BG1.2,newname=aftermyffs;
 endedit;
+!!Length of sequences
 save, sequence=myffs,file="myffs.seq";
+save, sequence=aftermyffs,file="aftermyffs.seq";
+value, myffs->L, aftermyffs->L;
+!stop;
+!  Joining sequences
+MDItrackall: sequence,L=myffsl+aftermyffsl,refer=entry,
+	     next_sequ=aftermyffs;
+myffs, at=0;
+aftermyffs, at=0, from=IP.4;
+endsequence;
+save, sequence=MDItrackall,file="MDItrackall.seq";
 !stop;
         
 ! seqedit, sequence=L000004;! b2 declaration
@@ -99,8 +119,10 @@ save, sequence=myffs,file="myffs.seq";
 
 
 !use, sequence=L000004;
-call,file="myffs.seq";
-use, sequence=myffs;
+!call,file="myffs.seq";
+!use, sequence=myffs;
+call,file="MDItrackall.seq";
+use, sequence=MDItrackall;
     
 !Cavity parameters
 ! Cavity is CA1 x 40
@@ -125,13 +147,15 @@ offy := 1.0*table(twiss,dy)*Espread;
         
 !Plot
 select, flag=twiss, clear;
-select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
-     MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,envx,envy,offx,offy;
-twiss,centre,beta0= betaStartTrack2,file="myffs.Oide.tfs";
+select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, 
+	MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
+	envx,envy,offx,offy;
+twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
+!twiss,centre,beta0= betaStartTrack2,file="myffs.Oide.tfs";
 plot, haxis=s,vaxis1=bety,betx,vaxis2=k2l;!, vaxis2=dx;
 system, "ps2pdf madx.ps";		     
 !exit;
-!stop;
+stop;
     
 ! select, flag=twiss, clear;
 ! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
