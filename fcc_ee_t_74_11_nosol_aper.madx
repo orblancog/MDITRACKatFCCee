@@ -1,0 +1,23 @@
+!# ~/mad/fcc-ee/Oide/fcc_ee_t_74_11_nosol_aper.madx
+! H. Burkhardt started 7/4/2016     define apertures in IR region
+! as disussed in fcc-ee MDI
+
+BpipeRadiusIP :=  0.020;  // 20 mm radius
+
+!#start
+IP,    apertype=circle, aperture={ BpipeRadiusIP };
+QC1R1, apertype=circle, aperture={ BpipeRadiusIP };
+QC1R2, apertype=circle, aperture={ BpipeRadiusIP };
+QC2R1, apertype=circle, aperture={ BpipeRadiusIP };
+QC2R2, apertype=circle, aperture={ BpipeRadiusIP};
+QC3,   apertype=circle, aperture={ BpipeRadiusIP };
+QC4,   apertype=circle, aperture={ BpipeRadiusIP };
+
+!#end
+IP.4,  apertype=circle, aperture={ BpipeRadiusIP };
+QC2L2, apertype=circle, aperture={ BpipeRadiusIP };
+QC2L1, apertype=circle, aperture={ BpipeRadiusIP };
+QC1L2, apertype=circle, aperture={ BpipeRadiusIP };
+QC1L1, apertype=circle, aperture={ BpipeRadiusIP };
+QC3L,  apertype=circle, aperture={ BpipeRadiusIP };
+QC4L,  apertype=circle, aperture={ BpipeRadiusIP };
