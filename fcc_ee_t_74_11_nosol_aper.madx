@@ -23,4 +23,7 @@ QC3L,  apertype=circle, aperture={ BpipeRadiusIP };
 QC4L,  apertype=circle, aperture={ BpipeRadiusIP };
 
 ! orblancog. New lattice apertures
-
+! adding elements that are in the IR
+PQC2RE, apertype=circle, aperture={ BpipeRadiusIP };
+BWL, apertype=circle, aperture={ BpipeRadiusIP };
+PQC2LE, apertype=circle, aperture={ BpipeRadiusIP };

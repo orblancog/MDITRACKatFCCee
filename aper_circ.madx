@@ -5,14 +5,15 @@
 
 Rpipe = 35e-3; // pipe of 35~mm radius
 
-IP, apertype=circle, aperture={Rpipe};
-QC1R1, apertype=circle, aperture={Rpipe};
-QC1R2, apertype=circle, aperture={Rpipe};
-QC2R1, apertype=circle, aperture={Rpipe};
-QC2R2, apertype=circle, aperture={Rpipe};
-PQC2RE, apertype=circle, aperture={Rpipe};
-QC3, apertype=circle, aperture={Rpipe};
-QC4, apertype=circle, aperture={Rpipe};
+! commenting the elements with some other Rpipe
+!IP, apertype=circle, aperture={Rpipe};
+!QC1R1, apertype=circle, aperture={Rpipe};
+!QC1R2, apertype=circle, aperture={Rpipe};
+!QC2R1, apertype=circle, aperture={Rpipe};
+!QC2R2, apertype=circle, aperture={Rpipe};
+!PQC2RE, apertype=circle, aperture={Rpipe};
+!QC3, apertype=circle, aperture={Rpipe};
+!QC4, apertype=circle, aperture={Rpipe};
 BC1, apertype=circle, aperture={Rpipe};
 QC5, apertype=circle, aperture={Rpipe};
 BC2, apertype=circle, aperture={Rpipe};
@@ -444,12 +445,12 @@ QC7L, apertype=circle, aperture={Rpipe};
 QC6L, apertype=circle, aperture={Rpipe};
 QC5L, apertype=circle, aperture={Rpipe};
 BC1L, apertype=circle, aperture={Rpipe};
-QC4L, apertype=circle, aperture={Rpipe};
-BWL, apertype=circle, aperture={Rpipe};
-QC3L, apertype=circle, aperture={Rpipe};
-PQC2LE, apertype=circle, aperture={Rpipe};
-QC2L2, apertype=circle, aperture={Rpipe};
-QC2L1, apertype=circle, aperture={Rpipe};
-QC1L2, apertype=circle, aperture={Rpipe};
-QC1L1, apertype=circle, aperture={Rpipe};
+!QC4L, apertype=circle, aperture={Rpipe};
+!BWL, apertype=circle, aperture={Rpipe};
+!QC3L, apertype=circle, aperture={Rpipe};
+!PQC2LE, apertype=circle, aperture={Rpipe};
+!QC2L2, apertype=circle, aperture={Rpipe};
+!QC2L1, apertype=circle, aperture={Rpipe};
+!QC1L2, apertype=circle, aperture={Rpipe};
+!QC1L1, apertype=circle, aperture={Rpipe};
 
