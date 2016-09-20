@@ -1,0 +1,2 @@
+cat listofelements.madx | sed 's/:.*/, apertype=circle, aperture={Rpipe};/g' > aper_circ.madx
+cat listofelements.madx | sed 's/\s.*/, apertype=circle, aperture={Rpipe};/g'
