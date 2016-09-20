@@ -1337,6 +1337,8 @@ QC1L1 : QUADRUPOLE, K1:= K1QC1L1, L:= LQC1L1;
 !call,file="hbumad/fcc-ee/Oide/fcc_ee_t_74_11_nosol_aper.madx";
 !orblancog 2016.07.26 modified path
 call,file="fcc_ee_t_74_11_nosol_aper.madx";
+!orblancog 2016.09.20 new apertures
+call,file="aper_circ.madx";
     
 
 L000004: SEQUENCE, REFER = CENTRE, L = 99983.76285041908;

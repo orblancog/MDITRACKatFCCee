@@ -21,3 +21,6 @@ QC1L2, apertype=circle, aperture={ BpipeRadiusIP };
 QC1L1, apertype=circle, aperture={ BpipeRadiusIP };
 QC3L,  apertype=circle, aperture={ BpipeRadiusIP };
 QC4L,  apertype=circle, aperture={ BpipeRadiusIP };
+
+! orblancog. New lattice apertures
+

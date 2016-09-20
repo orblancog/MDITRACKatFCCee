@@ -155,7 +155,7 @@ twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
 plot, haxis=s,vaxis1=bety,betx,vaxis2=k2l;!, vaxis2=dx;
 system, "ps2pdf madx.ps";		     
 !exit;
-stop;
+!stop;
     
 ! select, flag=twiss, clear;
 ! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
@@ -194,10 +194,10 @@ stop;
 select,flag=makethin,class=rbend,thick=false,slice=2;
 select,flag=makethin,class=quadrupole,thick=false,slice=2;
 select,flag=makethin,class=sextupole,thick=false,slice=2;
-makethin, sequence=myffs,style=teapot,makedipedge;
-save, sequence=myffs,file="myffs.thin.seq";
-call, file="myffs.thin.seq";
-use, sequence=myffs;
+makethin, sequence=MDItrackall,style=teapot,makedipedge;
+save, sequence=mditrackall,file="mditrackall.thin.seq";
+call, file="mditrackall.thin.seq";
+use, sequence=mditrackall;
 !set parameters
 track, onepass=true,aperture=true,onetable,recloss,dump;
 !observe;!set obeservation points
