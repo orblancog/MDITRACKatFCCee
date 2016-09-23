@@ -58,8 +58,13 @@ beam, particle = positron,energy = Ebeam,radiate=false,
 
 
 !Lattice
-call, file="FCCee_t_74_11_nosol.seq";
-use,sequence=L000004;
+!call, file="FCCee_t_74_11_nosol.seq";
+!use,sequence=L000004;
+call, file="FCCee_t_82_by2_1a_nosol_DS_2.seq";
+use,sequence=L000003;
+call, file="FCCee_t_82_cd_simls_by2_11b.seq";
+use,sequence=L000003;
+!stop;
 
 savebeta,label=betaStartTrack,place=IP.1;
 savebeta,label=betaStartTrack2,place=f0.154;
@@ -68,15 +73,16 @@ select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
 	 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
 	 envx,envy,offx,offy;
 ! twiss, looking for a closed solution - even if the machine is not closed
-twiss,rmatrix,chrom, file="fcc_ee_t_74_11_nosol_b1_twiss.tfs";
+!twiss,rmatrix,chrom, file="fcc_ee_t_74_11_nosol_b1_twiss.tfs";
+twiss,rmatrix,chrom, file="FCCee_t_82_by2_1a_nosol_DS_2.tfl";
 system, "rm -f beta0.txt beam0.txt";
 assign, echo="beta0.txt";
 show, betaStartTrack2;
 assign, echo="beam0.txt";
 show, beam;
 assign, echo=terminal;
-system, "root -q -l -x GenerateInrays.C";
-!stop;
+!system, "root -q -l -x GenerateInrays.C";
+stop;
 
 ! Picking the last section
 !startbetax=table(twiss,f0.154,betx);
