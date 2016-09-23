@@ -64,68 +64,78 @@ beam, particle = positron,energy = Ebeam,radiate=false,
 !use,sequence=L000003;
 call, file="FCCee_t_82_cd_simls_by2_11b.seq";
 use,sequence=L000003;
-!stop;
+!stop;1
+! Include apertures
+call, file="aper_circ.madx";
 
-savebeta,label=betaStartTrack,place=IP.1;
-savebeta,label=betaStartTrack2,place=f0.154;
+
+savebeta,label=betaStartTrack2,place=F0.58;! marker at s=24031.94874
+savebeta,label=betaIP,place=IP.1;! marker at s=24995.36094
+savebeta,label=betaEndTrack2,place=FG.1;! marker at s=25495.52712
 select, flag=twiss, clear;
 select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
 	 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
 	 envx,envy,offx,offy;
 ! twiss, looking for a closed solution - even if the machine is not closed
-twiss,rmatrix,chrom, file="FCCee_t_82_by2_1a_nosol_DS_2.tfl";
+twiss,rmatrix,chrom, file="FCCee_t_82_by2_1a_nosol_DS_2.tfs";
 plot, haxis=s, vaxis1=betx,bety,vaxis2=dx,dy;
-system, "ps2pdf madx.ps";
-system, "rm madx.ps";
+!system, "ps2pdf madx.ps";
+!system, "rm madx.ps";
 system, "rm -f beta0.txt beam0.txt";
 assign, echo="beta0.txt";
 show, betaStartTrack2;
 assign, echo="beam0.txt";
 show, beam;
 assign, echo=terminal;
-!system, "root -q -l -x GenerateInrays.C";
-stop;
+system, "root -q -l -x GenerateInrays.C";
+!stop;
 
-! Picking the last section
-!startbetax=table(twiss,f0.154,betx);
-!startbetay=table(twiss,f0.154,bety);
-!startalfax=1.0*table(twiss,f0.154,alfx);
-!startalfay=1.0*table(twiss,f0.154,alfy);
-!startmux=table(twiss,f0.154,mux);
-!startmuy=table(twiss,f0.154,muy);
-!value, startbetax,startbetay,startalfax,startalfay;
-myffsl=table(twiss,IP.4,s)-table(twiss,F0.154,s);
-value, table(twiss,IP.4,s),table(twiss,F0.154,s),myffsl;
-aftermyffsl=table(twiss,BG1.2,s)-table(twiss,IP.1,s);
-value, table(twiss,BG1.1,s),table(twiss,IP.1,s),aftermyffsl;
-!stop;
-seqedit,sequence=L000004;
-extract,sequence=L000004, from=F0.154, to=IP.4,newname=myffs;
-!cycle, start=IP.4;
-extract,sequence=L000004, from=IP.1, to=BG1.2,newname=aftermyffs;
-endedit;
-!!Length of sequences
-save, sequence=myffs,file="myffs.seq";
-save, sequence=aftermyffs,file="aftermyffs.seq";
-value, myffs->L, aftermyffs->L;
-!stop;
-!  Joining sequences
-MDItrackall: sequence,L=myffsl+aftermyffsl,refer=entry,
-	     next_sequ=aftermyffs;
-myffs, at=0;
-aftermyffs, at=0, from=IP.4;
-endsequence;
-save, sequence=MDItrackall,file="MDItrackall.seq";
-!stop;
-        
+! ! Joining lattices fcceeV7nosol b1
+! ! Picking the last section
+! !startbetax=table(twiss,f0.154,betx);
+! !startbetay=table(twiss,f0.154,bety);
+! !startalfax=1.0*table(twiss,f0.154,alfx);
+! !startalfay=1.0*table(twiss,f0.154,alfy);
+! !startmux=table(twiss,f0.154,mux);
+! !startmuy=table(twiss,f0.154,muy);
+! !value, startbetax,startbetay,startalfax,startalfay;
+! myffsl=table(twiss,IP.4,s)-table(twiss,F0.154,s);
+! value, table(twiss,IP.4,s),table(twiss,F0.154,s),myffsl;
+! aftermyffsl=table(twiss,BG1.2,s)-table(twiss,IP.1,s);
+! value, table(twiss,BG1.1,s),table(twiss,IP.1,s),aftermyffsl;
+! !stop;
+! seqedit,sequence=L000004;
+! extract,sequence=L000004, from=F0.154, to=IP.4,newname=myffs;
+! !cycle, start=IP.4;
+! extract,sequence=L000004, from=IP.1, to=BG1.2,newname=aftermyffs;
+! endedit;
+! !!Length of sequences
+! save, sequence=myffs,file="myffs.seq";
+! save, sequence=aftermyffs,file="aftermyffs.seq";
+! value, myffs->L, aftermyffs->L;
+! !stop;
+! !  Joining sequences
+! MDItrackall: sequence,L=myffsl+aftermyffsl,refer=entry,
+! 	     next_sequ=aftermyffs;
+! myffs, at=0;
+! aftermyffs, at=0, from=IP.4;
+! endsequence;
+! save, sequence=MDItrackall,file="MDItrackall.seq";
+!!!!! And now for b2 if necessary
 ! seqedit, sequence=L000004;! b2 declaration
 !   cycle,start=L000004$END; ! start at end for reflect
 !   reflect;
 ! endedit;
 ! save,sequence=L000004,file="FCCee_t_45_16_cw_nosol_b2.seq";
 
+! Extracting section to track fcceeV8nosol
+seqedit, sequence=L000003;
+extract,sequence=L000003, from=F0.58, to=FG.1, newname=MDItrackall;
+endedit;
+save, sequence=MDItrackall,file="MDItrackall.seq";
 
-
+!stop;
+        
 !use, sequence=L000004;
 !call,file="myffs.seq";
 !use, sequence=myffs;
@@ -151,19 +161,17 @@ envy := 1.0*sqrt(emity*table(twiss,bety)
 offx := 1.0*table(twiss,dx)*Espread;
 offy := 1.0*table(twiss,dy)*Espread;
 
-!stop;
-        
+!stop;        
 !Plot
 select, flag=twiss, clear;
 select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, 
 	MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
 	envx,envy,offx,offy;
 twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
-!twiss,centre,beta0= betaStartTrack2,file="myffs.Oide.tfs";
-plot, haxis=s,vaxis1=bety,betx,vaxis2=k2l;!, vaxis2=dx;
-system, "ps2pdf madx.ps";		     
-!exit;
-!stop;
+plot, colour=100, haxis=s,vaxis1=bety,betx,vaxis2=dx,dy;
+system, "ps2pdf madx.ps mditrackall.pdf";
+system, "rm madx.ps";
+stop;
     
 ! select, flag=twiss, clear;
 ! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
