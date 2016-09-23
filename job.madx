@@ -171,7 +171,7 @@ twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
 plot, colour=100, haxis=s,vaxis1=bety,betx,vaxis2=dx,dy;
 system, "ps2pdf madx.ps mditrackall.pdf";
 system, "rm madx.ps";
-stop;
+!stop;
     
 ! select, flag=twiss, clear;
 ! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
