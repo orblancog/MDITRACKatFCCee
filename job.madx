@@ -65,8 +65,8 @@ beam, particle = positron,energy = Ebeam,radiate=false,
 call, file="FCCee_t_82_cd_simls_by2_11b.seq";
 use,sequence=L000003;
 !stop;1
-! Include apertures
-call, file="aper_circ.madx";
+call, file="aper_circ.madx";! Include apertures
+
 
 
 savebeta,label=betaStartTrack2,place=F0.58;! marker at s=24031.94874
@@ -87,7 +87,7 @@ show, betaStartTrack2;
 assign, echo="beam0.txt";
 show, beam;
 assign, echo=terminal;
-system, "root -q -l -x GenerateInrays.C";
+system, 'root -q -l -x "GenerateInrays.C(\"0\",1000)"';
 !stop;
 
 ! ! Joining lattices fcceeV7nosol b1
