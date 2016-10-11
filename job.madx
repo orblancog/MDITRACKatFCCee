@@ -216,7 +216,7 @@ call, file="mditrackall.thin.seq";
 use, sequence=mditrackall;
 !set parameters
 track, onepass=true,aperture=true,onetable,recloss,dump;
-!observe;!set obeservation points
+call, file="observe.madx";!observe;!set obeservation points
 !set particles
 start, X=1e-3, PX=1e-3, Y=1e-3, PY=1e-3, T=1e-9, PT=1e-9;
 start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
