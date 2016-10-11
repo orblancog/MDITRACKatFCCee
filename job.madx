@@ -243,8 +243,10 @@ call, file="inrays.madx";
 ptc_track, icase=6,element_by_element,turns=1,dump,onetable,norm_no=1,file,
     extension=".txt";
 !DYNAP,FASTUNE,TURNS=1024,LYAPUNOV=1.e-7;
-!plot, file="track_x",table=track,haxis=x,vaxis=px,particle=1,2,3,4,5,6, colour=1000, multiple, symbol=3;
-!plot, file="track_y",table=track,haxis=y,vaxis=py,particle=1,2,3,4,5,6, colour=1000, multiple, symbol=3;
+!plot, file="track_x",table=track,haxis=x,vaxis=px,particle=1,2,3,4,5,6,
+!  colour=1000, multiple, symbol=3;
+!plot, file="track_y",table=track,haxis=y,vaxis=py,particle=1,2,3,4,5,6,
+!  colour=1000, multiple, symbol=3;
 ptc_track_end;
 ptc_end;
 !end of NO purpose tracking in PTC
