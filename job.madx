@@ -87,7 +87,7 @@ show, betaStartTrack2;
 assign, echo="beam0.txt";
 show, beam;
 assign, echo=terminal;
-system, 'root -q -l -x "GenerateInrays.C(\"0\",1000)"';
+system, 'root -q -l -x "GenerateInrays.C(\"0\",100)"';
 !stop;
 
 ! ! Joining lattices fcceeV7nosol b1
@@ -168,6 +168,9 @@ select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
 	MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
 	envx,envy,offx,offy;
 twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
+select, flag=twiss, clear;
+select, flag=twiss, full;
+twiss,centre,beta0= betaStartTrack2,file="mdisim.tfs";
 plot, colour=100, haxis=s,vaxis1=bety,betx,vaxis2=dx,dy;
 system, "ps2pdf madx.ps mditrackall.pdf";
 system, "rm madx.ps";
@@ -219,7 +222,9 @@ track, onepass=true,aperture=true,onetable,recloss,dump;
 call, file="observe.madx";!observe;!set obeservation points
 !set particles
 start, X=1e-3, PX=1e-3, Y=1e-3, PY=1e-3, T=1e-9, PT=1e-9;
-start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
+start, X=1e-3, PX=1e-3, Y=1e-5, PY=1e-5, T=1e-9, PT=1e-9;
+start, X=1e-3, PX=5e-4, Y=1e-5, PY=1e-5, T=1e-9, PT=1e-9;
+!start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
 call,file="madxInrays.madx";
 run,turns=1,maxaper={0.1,0.01,0.1,0.01,1.0,0.1};!run track
 !dynap;
@@ -227,8 +232,9 @@ endtrack;
 write, table=trackloss, file="trackloss";!write lost particles
 
 !end of NO purpose tracking in MAD-X
+survey, file="survey";
 
-   
+
 ! NO purpuse tracking in PTC
 stop;
 !set parameters
