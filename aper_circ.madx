@@ -6,6 +6,7 @@
 BpipeRadiusIP :=  0.020;  // 20 mm radius 
 Rpipe = 35e-3; // pipe of 35~mm radius
 ! Two different beam pipe radius for now
+
 FRF, apertype=circle, aperture={Rpipe};
 QRF, apertype=circle, aperture={Rpipe};
 CA1, apertype=circle, aperture={Rpipe};
@@ -205,7 +206,6 @@ QB3, apertype=circle, aperture={Rpipe};
 QB2, apertype=circle, aperture={Rpipe};
 QB1, apertype=circle, aperture={Rpipe};
 SY2L, apertype=circle, aperture={Rpipe};
-FSCWL, apertype=circle, aperture={Rpipe};
 BC5L, apertype=circle, aperture={Rpipe};
 QY2L, apertype=circle, aperture={Rpipe};
 BC4L, apertype=circle, aperture={Rpipe};
@@ -217,21 +217,21 @@ QC7L, apertype=circle, aperture={Rpipe};
 QC6L, apertype=circle, aperture={Rpipe};
 QC5L, apertype=circle, aperture={Rpipe};
 BC1L, apertype=circle, aperture={Rpipe};
-QC4L, apertype=circle, aperture={ BpipeRadiusIP };
-BWL, apertype=circle, aperture={ BpipeRadiusIP };
-QC3L, apertype=circle, aperture={ BpipeRadiusIP };
-QT1L, apertype=circle, aperture={ BpipeRadiusIP };
-PQC2LE, apertype=circle, aperture={ BpipeRadiusIP };
-QC2L2, apertype=circle, aperture={ BpipeRadiusIP };
-QC2L1, apertype=circle, aperture={ BpipeRadiusIP };
-QC1L2, apertype=circle, aperture={ BpipeRadiusIP };
-QC1L1, apertype=circle, aperture={ BpipeRadiusIP };
-IP, apertype=circle, aperture={ BpipeRadiusIP };
-QC1R1, apertype=circle, aperture={ BpipeRadiusIP };
-QC1R2, apertype=circle, aperture={ BpipeRadiusIP };
-QC2R1, apertype=circle, aperture={ BpipeRadiusIP };
-QC2R2, apertype=circle, aperture={ BpipeRadiusIP };
-PQC2RE, apertype=circle, aperture={ BpipeRadiusIP };
+QC4L, apertype=circle, aperture={BpipeRadiusIP};
+BWL, apertype=circle, aperture={BpipeRadiusIP};
+QC3L, apertype=circle, aperture={BpipeRadiusIP};
+QT1L, apertype=circle, aperture={BpipeRadiusIP};
+PQC2LE, apertype=circle, aperture={BpipeRadiusIP};
+QC2L2, apertype=circle, aperture={BpipeRadiusIP};
+QC2L1, apertype=circle, aperture={BpipeRadiusIP};
+QC1L2, apertype=circle, aperture={BpipeRadiusIP};
+QC1L1, apertype=circle, aperture={BpipeRadiusIP};
+IP, apertype=circle, aperture={BpipeRadiusIP};
+QC1R1, apertype=circle, aperture={BpipeRadiusIP};
+QC1R2, apertype=circle, aperture={BpipeRadiusIP};
+QC2R1, apertype=circle, aperture={BpipeRadiusIP};
+QC2R2, apertype=circle, aperture={BpipeRadiusIP};
+PQC2RE, apertype=circle, aperture={BpipeRadiusIP};
 QT1, apertype=circle, aperture={Rpipe};
 QC3, apertype=circle, aperture={Rpipe};
 QC4, apertype=circle, aperture={Rpipe};
@@ -249,7 +249,6 @@ QY1, apertype=circle, aperture={Rpipe};
 BC6, apertype=circle, aperture={Rpipe};
 BC7, apertype=circle, aperture={Rpipe};
 SY2R, apertype=circle, aperture={Rpipe};
-FSCWR, apertype=circle, aperture={Rpipe};
 QA1, apertype=circle, aperture={Rpipe};
 QA2, apertype=circle, aperture={Rpipe};
 QA3, apertype=circle, aperture={Rpipe};
@@ -457,3 +456,5 @@ QRFR4, apertype=circle, aperture={Rpipe};
 QRDR4, apertype=circle, aperture={Rpipe};
 QRFR5, apertype=circle, aperture={Rpipe};
 QRDR5, apertype=circle, aperture={Rpipe};
+
+
