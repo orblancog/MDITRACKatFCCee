@@ -11,48 +11,47 @@ option,-echo,-info,-warn;
 ! http://tlep.web.cern.ch/content/machine-parameters
 ! https://indico.cern.ch/event/438866/contributions/1085022/attachments/1256984/1856023/1Boscolo.pdf
 ! http://tlep.web.cern.ch/content/machine-parameters
-! FCC ee 175~GeV
-Ebeam  := 175;![GeV]
-emitx   = 1.3e-9;![m]
-emity   = 2.5e-12;![m]
-Espread = 1.19e-3;!\sigma_{\Delta_E}/E [1]
-bunchl  = 2.5e-3;!0.02;![m]
-bunchn  = 81;![1]
-partn   = 1.71e11;![1]
-! FCC ee 120~GeV
-! Ebeam := 120;![GeV]
-! emitx   = 0.94e-9;![m]
-! emity   = 1.9e-12;![m]
-! delp    = 1.14e-3;!\sigma_{\Delta_E}/E [1]
-! bunchl  = 1.17e-3;!0.02;![m]
-! bunchn  = 1360;![1]
-! partn   = 0.46e11;![1]
-! beam, particle = positron,energy = Ebeam,radiate=true,
-!     ex=emitx,ey=emity,et=bunchl*delp,sigt=bunchl,sige=Espread,
-!     npart=partn,bunched=true,kbunch=bunchn,bv=+1;
-! ! FCC ee 80~GeV
-! Ebeam := 80;![GeV]
-! emitx   = 3.3e-9;![m]
-! emity   = 7e-12;![m]
-! delp    = 0.9e-3;!\sigma_{\Delta_E}/E [1]
-! bunchl  = 1.49e-3;!0.02;![m]
-! bunchn  = 4490;![1]
-! partn   = 0.7e11;![1]
-! beam, particle = positron,energy = Ebeam,radiate=true,
-!     ex=emitx,ey=emity,et=bunchl*delp,sigt=bunchl,sige=Espread,
-!     npart=partn,bunched=true,kbunch=bunchn,bv=+1;
-! ! FCC ee 45.5~GeV
-! Ebeam := 45.5;![GeV]
-! emitx   = 29.2e-9;![m]
-! emity   = 60e-12;![m]
-! delp    = 0.6e-3;!\sigma_{\Delta_E}/E [1]
-! bunchl  = 2.56e-3;!0.02;![m]
-! bunchn  = 16700;![1]
-! partn   = 1.8e11;![1]
-! beam, particle = positron,energy = Ebeam,radiate=true,
-!     ex=emitx,ey=emity,et=bunchl*delp,sigt=bunchl,sige=Espread,
-!     npart=partn,bunched=true,kbunch=bunchn,bv=+1;
-beam, particle = positron,energy=Ebeam,radiate=false,
+! ! FCC ee 175~GeV
+! Ebeam  := 175;[GeV]
+! emitx   = 1.3e-9;[m]
+! emity   = 2.5e-12;[m]
+! Espread = 1.19e-3;\sigma_{\Delta_E}/E [1]
+! bunchl  = 2.5e-3;0.02;![m]
+! bunchn  = 81;[1]
+! partn   = 1.71e11;[1]
+! ! ! FCC ee 120~GeV
+! Ebeam  := 120;![GeV]
+! emitx   = 0.61e-9;![m]
+! emity   = 1.2e-12;![m]
+! Espread = 1.12e-3;!\sigma_{\Delta_E}/E [1]
+! bunchl  = 2.4e-3;!0.02;![m]
+! bunchn  = 780;![1]
+! partn   = 0.8e11;![1]
+! ! ! FCC ee 80~GeV
+! Ebeam  := 80;![GeV]
+! emitx   = 0.26e-9;![m]
+! emity   = 1e-12;![m]
+! Espread = 1.0e-3;!\sigma_{\Delta_E}/E [1]
+! bunchl  = 3.1e-3;!0.02;![m]
+! bunchn  = 5260;![1]
+! partn   = 0.6e11;![1]
+! ! FCC ee 45.5~GeV and 91500 bunches
+Ebeam  := 45.6;![GeV]
+emitx   = 0.09e-9;![m]
+emity   = 1e-12;![m]
+Espread = 0.9e-3;!\sigma_{\Delta_E}/E [1]
+bunchl  = 3.8e-3;!0.02;![m]
+bunchn  = 91500;![1]
+partn   = 0.33e11;![1]
+! ! FCC ee 45.5~GeV and 30180 bunches
+Ebeam  := 45.6;![GeV]
+emitx   = 0.2e-9;![m]
+emity   = 1e-12;![m]
+Espread = 2.2e-3;!\sigma_{\Delta_E}/E [1]
+bunchl  = 6.7e-3;!0.02;![m]
+bunchn  = 30180;![1]
+partn   = 1.0e11;![1]
+beam, particle=positron,energy=Ebeam,radiate=true,
     ex=emitx,ey=emity,et=bunchl*Espread,sigt=bunchl,sige=Espread,
     npart=partn,bunched=true,kbunch=bunchn,bv=+1;
 !fails with radiate at 175 GeV
@@ -175,7 +174,7 @@ system, 'root -q -l -x "GenerateInrays.C(\"0\",100)"';
 !VTOTRF:=2.5e3;!45.4~GeV
 !VOLTCA1:=VTOTRF/40;
 !VOLTCA1:=10;
-VOLTCA1:=198;
+VOLTCA1:=1.82;!10.7;!46.7;!198
 LAGCA1:=0.304;
 CA1->harmon:=400e6/(299792458.0/99983.762850419080);!h=frf/(clight*circ)
 
@@ -226,10 +225,10 @@ offy := 1.0*table(twiss,dy)*Espread;
 ! Touschek    
 !select, flag=twiss, clear;
 !select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, MUX,
-     MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L;
+!     MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L;
 !twiss,chrom,centre,file="myFCCee.76.tfs";
 ! !return;
-touschek,file="myFCCee.76.tou",tolerance=1;
+touschek,file="myFCCee.76.tou",tolerance=1e-7;
 return;
  
 
