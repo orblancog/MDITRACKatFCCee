@@ -170,12 +170,13 @@ savebeta,label=betaIP,place=IP.1;! marker at s=IP
 savebeta,label=betaEndTrack2,place=FG.1;! marker at s=0.5km from IP
 twiss;
 ! Extracting section to track fcceeV8nosol
-seqedit, sequence=L000003;
-extract,sequence=L000003, from=F0.58, to=FG.1, newname=MDItrack;
-endedit;
-save, sequence=MDItrack,file="MDItrack.seq";
-call,file="MDItrack.seq";
-use, sequence=MDItrack;
+!seqedit, sequence=L000003;
+!extract,sequence=L000003, from=F0.58, to=FG.1, newname=MDItrack;
+!extract,sequence=L000003, from=#s, to=#e, newname=MDItrack;
+!endedit;
+!save, sequence=MDItrack,file="MDItrack.seq";
+!call,file="MDItrack.seq";
+!use, sequence=MDItrack;
 !stop;
         
 !use, sequence=L000004;
