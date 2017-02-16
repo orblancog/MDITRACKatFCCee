@@ -3,6 +3,11 @@
 ! cat listofelements.madx | sed 's/\s.*/, apertype=circle, aperture={Rpipe};/g'
 ! where listofelements.madx was cut and pasted from the lattice definition
 
+! apertures from 
+! https://indico.cern.ch/event/596695/contributions/2414999/attachments/1396098/2128287/Optics_Oide_170116.pdf
+! Page 11 : A solution: larger outgoing beam pipe & thinner final quads
+
+
 BpipeRadiusIP :=  0.020;  // 20 mm radius 
 Rpipe = 35e-3; // pipe of 35~mm radius
 ! Two different beam pipe radius for now
@@ -222,15 +227,15 @@ BWL, apertype=circle, aperture={ BpipeRadiusIP };
 QC3L, apertype=circle, aperture={ BpipeRadiusIP };
 QT1L, apertype=circle, aperture={ BpipeRadiusIP };
 PQC2LE, apertype=circle, aperture={ BpipeRadiusIP };
-QC2L2, apertype=circle, aperture={ BpipeRadiusIP };
-QC2L1, apertype=circle, aperture={ BpipeRadiusIP };
-QC1L2, apertype=circle, aperture={ BpipeRadiusIP };
-QC1L1, apertype=circle, aperture={ BpipeRadiusIP };
-IP, apertype=circle, aperture={ BpipeRadiusIP };
-QC1R1, apertype=circle, aperture={ BpipeRadiusIP };
-QC1R2, apertype=circle, aperture={ BpipeRadiusIP };
-QC2R1, apertype=circle, aperture={ BpipeRadiusIP };
-QC2R2, apertype=circle, aperture={ BpipeRadiusIP };
+QC2L2, apertype=circle, aperture={ 0.5*26e-3 };
+QC2L1, apertype=circle, aperture={ 0.5*26e-3 };
+QC1L2, apertype=circle, aperture={ 0.5*26e-3 };
+QC1L1, apertype=circle, aperture={ 0.5*26e-3 };
+IP, apertype=circle, aperture={ 0.5*40e-3 };
+QC1R1, apertype=circle, aperture={ 0.5*40e-3 };
+QC1R2, apertype=circle, aperture={ 0.5*40e-3 };
+QC2R1, apertype=circle, aperture={ 0.5*40e-3 };
+QC2R2, apertype=circle, aperture={ 0.5*40e-3 };
 PQC2RE, apertype=circle, aperture={ BpipeRadiusIP };
 QT1, apertype=circle, aperture={Rpipe};
 QC3, apertype=circle, aperture={Rpipe};
