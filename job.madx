@@ -5,20 +5,19 @@
 ! cd /tmp/$LOGNAME/
 ! madx /afs/cern.ch/eng/fcc/ee/Oide/Run_FCCee_t_26_cw_nosol.madx
 
-option,-echo,-info,-warn;
-
+option,echo,info,warn;
+!stop;
 ! Beam params
-! http://tlep.web.cern.ch/content/machine-parameters
 ! https://indico.cern.ch/event/438866/contributions/1085022/attachments/1256984/1856023/1Boscolo.pdf
 ! http://tlep.web.cern.ch/content/machine-parameters
-! ! FCC ee 175~GeV
-! Ebeam  := 175;[GeV]
-! emitx   = 1.3e-9;[m]
-! emity   = 2.5e-12;[m]
-! Espread = 1.19e-3;\sigma_{\Delta_E}/E [1]
-! bunchl  = 2.5e-3;0.02;![m]
-! bunchn  = 81;[1]
-! partn   = 1.71e11;[1]
+! FCC ee 175~GeV
+Ebeam  := 175;![GeV]
+emitx   =   1.3e-9;![m]
+emity   =   2.5e-12;![m]
+Espread =   1.19e-3;!\sigma_{\Delta_E}/E [1]
+bunchl  =   2.5e-3;!0.02;![m]
+bunchn  =  81;![1]
+partn   =   1.71e11;![1]
 ! ! ! FCC ee 120~GeV
 ! Ebeam  := 120;![GeV]
 ! emitx   = 0.61e-9;![m]
@@ -35,79 +34,96 @@ option,-echo,-info,-warn;
 ! bunchl  = 3.1e-3;!0.02;![m]
 ! bunchn  = 5260;![1]
 ! partn   = 0.6e11;![1]
-! ! FCC ee 45.5~GeV and 91500 bunches
-Ebeam  := 45.6;![GeV]
-emitx   = 0.09e-9;![m]
-emity   = 1e-12;![m]
-Espread = 0.9e-3;!\sigma_{\Delta_E}/E [1]
-bunchl  = 3.8e-3;!0.02;![m]
-bunchn  = 91500;![1]
-partn   = 0.33e11;![1]
-! ! FCC ee 45.5~GeV and 30180 bunches
-Ebeam  := 45.6;![GeV]
-emitx   = 0.2e-9;![m]
-emity   = 1e-12;![m]
-Espread = 2.2e-3;!\sigma_{\Delta_E}/E [1]
-bunchl  = 6.7e-3;!0.02;![m]
-bunchn  = 30180;![1]
-partn   = 1.0e11;![1]
-beam, particle=positron,energy=Ebeam,radiate=true,
+! ! ! FCC ee 45.5~GeV and 91500 bunches
+! Ebeam  := 45.6;![GeV]
+! emitx   = 0.09e-9;![m]
+! emity   = 1e-12;![m]
+! Espread = 0.9e-3;!\sigma_{\Delta_E}/E [1]
+! bunchl  = 3.8e-3;!0.02;![m]
+! bunchn  = 91500;![1]
+! partn   = 0.33e11;![1]
+! ! ! FCC ee 45.5~GeV and 30180 bunches
+! Ebeam  := 45.6;![GeV]
+! emitx   = 0.2e-9;![m]
+! emity   = 1e-12;![m]
+! Espread = 2.2e-3;!\sigma_{\Delta_E}/E [1]
+! bunchl  = 6.7e-3;!0.02;![m]
+! bunchn  = 30180;![1]
+! partn   = 1.0e11;![1]
+beam, particle=positron,energy=Ebeam,radiate=false,
     ex=emitx,ey=emity,et=bunchl*Espread,sigt=bunchl,sige=Espread,
     npart=partn,bunched=true,kbunch=bunchn,bv=+1;
 !fails with radiate at 175 GeV
+
+!Cavity parameters
+! Cavity is CA1 x 40
+! for half the ring the number of cavities is 20
+!value,FREQCA1,LAGCA1,VOLTCA1,CA1->harmon;
+! NOTE: defaultfreq is 400~MHz (not 800~MHz), and lag is 0.5[2pi]
+! Leave default voltage per cavity
+!VTOTRF:=10e3;![MV]!175~GeV
+!VTOTRF:=5.5e3;!120~GeV
+!VTOTRF:=4e3;!80~GeV
+!VTOTRF:=2.5e3;!45.4~GeV
+!VOLTCA1:=VTOTRF/40;
+!VOLTCA1:=10;
+VOLTCA1:=198;!1.82;!10.7;!46.7;!198
+LAGCA1:=0.304;
+CA1->harmon:=400e6/(299792458.0/99983.762850419080);!h=frf/(clight*circ)
+
 
 
 !Lattice
 !call, file="FCCee_t_74_11_nosol.seq";
 !use,sequence=L000004;
-!call, file="FCCee_t_82_by2_1a_nosol_DS_2.seq";
-!use,sequence=L000003;
+call, file="FCCee_t_82_by2_1a_nosol_DS_2.seq";
+call, file="aper_circ.FCCee_t_82_by2_1a_nosol_DS_2.madx";! Include apertures
+use,sequence=L000003;
 !call, file="FCCee_t_82_cd_simls_by2_11b.seq";
 !use,sequence=L000003;
-call, file="FCCee_t_76_by2_2.seq";! Jan/2017
-use,sequence=L000003;
+!call, file="FCCee_t_76_by2_2.seq";! Jan/2017
+!use,sequence=L000003;
 !stop;1
-call, file="aper_circ.madx";! Include apertures
 
 
-!! Joining two halfs
-fullFCCee : sequence,refer=centre,L=49991.88654995865*2;
-  L000003, at=24995.385369668056+5.579053e-01;	
-!  L000003, at=;
-  L000003, at=49991.88654995865+24995.385369668056+5.579053e-01;
-!  L000003, at=0.5579053113;! zero at IP
-!  L000003, at=49991.88654+0.5579053113;
-endsequence;
-!seqedit, sequence=fullFCCee;
-!flatten;
-!endedit;
-save, sequence=fullFCCee,file="fullFCCee.seq";
-!stop;
+! !! Joining two halfs of FCCee_t_76_by2_2.seq
+! fullFCCee : sequence,refer=centre,L=49991.88654995865*2;
+!   L000003, at=24995.385369668056+5.579053e-01;	
+! !  L000003, at=;
+!   L000003, at=49991.88654995865+24995.385369668056+5.579053e-01;
+! !  L000003, at=0.5579053113;! zero at IP
+! !  L000003, at=49991.88654+0.5579053113;
+! endsequence;
+! !seqedit, sequence=fullFCCee;
+! !flatten;
+! !endedit;
+! save, sequence=fullFCCee,file="fullFCCee.seq";
+! !stop;
 !call, file="fullFCCee.seq";
-use, sequence=fullfccee;
-!stop;
-savebeta,label=betaStartTrack2,place=F0.58;! marker at s=-1km from IP
-savebeta,label=betaIP,place=IP.1;! marker at s=IP
-savebeta,label=betaEndTrack2,place=FG.1;! marker at s=0.5km from IP
-select, flag=twiss, clear;
-select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
-	 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
-	 envx,envy,offx,offy;
-!emit,deltap=0;
-!show, beam;
-!stop;
+! use, sequence=fullfccee;
+! !stop;
+! savebeta,label=betaStartTrack2,place=F0.58;! marker at s=-1km from IP
+! savebeta,label=betaIP,place=IP.1;! marker at s=IP
+! savebeta,label=betaEndTrack2,place=FG.1;! marker at s=0.5km from IP
+! select, flag=twiss, clear;
+! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
+! 	 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
+! 	 envx,envy,offx,offy;
+! !emit,deltap=0;
+! !show, beam;
+! !stop;
 ! twiss, looking for a closed solution - even if the machine is not closed
-twiss,rmatrix,chrom, file="FCCee_t_76_by2_2.tfs";
-plot, haxis=s, vaxis1=betx,bety,vaxis2=dx,dy;
-!system, "ps2pdf madx.ps";
-!system, "rm madx.ps";
-system, "rm -f beta0.txt beam0.txt";
-assign, echo="beta0.txt";
-show, betaStartTrack2;
-assign, echo="beam0.txt";
-show, beam;
-assign, echo=terminal;
-system, 'root -q -l -x "GenerateInrays.C(\"0\",100)"';
+! twiss,rmatrix,chrom, file="FCCee_t_76_by2_2.tfs";
+! plot, haxis=s, vaxis1=betx,bety,vaxis2=dx,dy;
+! !system, "ps2pdf madx.ps";
+! !system, "rm madx.ps";
+! system, "rm -f beta0.txt beam0.txt";
+! assign, echo="beta0.txt";
+! show, betaStartTrack2;
+! assign, echo="beam0.txt";
+! show, beam;
+! assign, echo=terminal;
+! system, 'root -q -l -x "GenerateInrays.C(\"0\",100)"';
 !stop;
 
 ! ! Joining lattices fcceeV7nosol b1
@@ -148,57 +164,45 @@ system, 'root -q -l -x "GenerateInrays.C(\"0\",100)"';
 ! endedit;
 ! save,sequence=L000004,file="FCCee_t_45_16_cw_nosol_b2.seq";
 
-! ! Extracting section to track fcceeV8nosol
-! seqedit, sequence=L000003;
-! extract,sequence=L000003, from=F0.58, to=FG.1, newname=MDItrackall;
-! endedit;
-! save, sequence=MDItrackall,file="MDItrackall.seq";
-
+! Some initial points
+savebeta,label=betaStartTrack2,place=F0.58;! marker at s=-1km from IP
+savebeta,label=betaIP,place=IP.1;! marker at s=IP
+savebeta,label=betaEndTrack2,place=FG.1;! marker at s=0.5km from IP
+twiss;
+! Extracting section to track fcceeV8nosol
+seqedit, sequence=L000003;
+extract,sequence=L000003, from=F0.58, to=FG.1, newname=MDItrack;
+endedit;
+save, sequence=MDItrack,file="MDItrack.seq";
+call,file="MDItrack.seq";
+use, sequence=MDItrack;
 !stop;
         
 !use, sequence=L000004;
 !call,file="myffs.seq";
 !use, sequence=myffs;
-!call,file="MDItrackall.seq";
-!use, sequence=MDItrackall;
-    
-!Cavity parameters
-! Cavity is CA1 x 40
-! for half the ring the number of cavities is 20
-!value,FREQCA1,LAGCA1,VOLTCA1,CA1->harmon;
-! NOTE: defaultfreq is 400~MHz (not 800~MHz), and lag is 0.5[2pi]
-! Leave default voltage per cavity
-!VTOTRF:=10e3;![MV]!175~GeV
-!VTOTRF:=5.5e3;!120~GeV
-!VTOTRF:=4e3;!80~GeV
-!VTOTRF:=2.5e3;!45.4~GeV
-!VOLTCA1:=VTOTRF/40;
-!VOLTCA1:=10;
-VOLTCA1:=1.82;!10.7;!46.7;!198
-LAGCA1:=0.304;
-CA1->harmon:=400e6/(299792458.0/99983.762850419080);!h=frf/(clight*circ)
 
+!stop;        
+! !Plot
 envx := 1.0*sqrt(emitx*table(twiss,betx)
     + (table(twiss,dx)*Espread)*(table(twiss,dx)*Espread));
 envy := 1.0*sqrt(emity*table(twiss,bety)
     + (table(twiss,dy)*Espread)*(table(twiss,dy)*Espread));
 offx := 1.0*table(twiss,dx)*Espread;
 offy := 1.0*table(twiss,dy)*Espread;
-
-!stop;        
-! !Plot
-! select, flag=twiss, clear;
+select, flag=twiss, clear;
 ! select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY, 
 ! 	MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L,
 ! 	envx,envy,offx,offy;
-! twiss,centre,beta0= betaStartTrack2,file="mditrackall.tfs";
+select, flag=twiss, column=NAME,KEYWORD,S,BETX,BETY,ALFX,ALFY,DX,DPX,MUX,MUY,L,ANGLE,K1L,K2L,APERTYPE,APER_1,APER_2,APER_3,APER_4,X,Y,DY,PX,PY,T,PT,VOLT,LAG,FREQ,HARMON,RE11,RE12,RE13,RE14,RE15,RE16,RE21,RE22,RE23,RE24,RE25,RE26,RE31,RE32,RE33,RE34,RE35,RE36,RE41,RE42,RE43,RE44,RE45,RE46,RE51,RE52,RE53,RE54,RE55,RE56,RE61,RE62,RE63,RE64,RE65,RE66;
+twiss,beta0= betaStartTrack2,file="mdi_FCCee_t_82_by2_1a_nosol_DS_2.tfs";
 ! select, flag=twiss, clear;
 ! select, flag=twiss, full;
 ! twiss,centre,beta0= betaStartTrack2,file="mdisim.tfs";
 ! plot, colour=100, haxis=s,vaxis1=bety,betx,vaxis2=dx,dy;
 ! system, "ps2pdf madx.ps mditrackall.pdf";
 ! system, "rm madx.ps";
-! !stop;
+stop;
 
 
     
